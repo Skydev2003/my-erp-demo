@@ -1,27 +1,37 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import productRoutes from './routes/productRoutes';
+
+// 1. Import ทุก Routes ที่เราสร้างไว้
+import masterRoutes from './routes/masterRoutes';
+import inventoryRoutes from './routes/inventoryRoutes';
+import coreRoutes from './routes/coreRoutes';
+import procurementRoutes from './routes/procurementRoutes';
+import productionRoutes from './routes/productionRoutes';
+import salesRoutes from './routes/salesRoutes';
+import maintenanceRoutes from './routes/maintenanceRoutes';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// เช็คสถานะเซิร์ฟเวอร์
-app.get('/', (req: Request, res: Response) => {
-  res.send('🚀 ERP Backend is running!');
+// หน้าแรกเช็คสถานะ
+app.get('/', (req, res) => {
+  res.send('🚀 SUNFORD ERP Backend API is fully operational!');
 });
 
-// 🔗 เชื่อมต่อ Routes ต่างๆ (เหมือนการแยกแผนก)
-app.use('/api/products', productRoutes);
-// อนาคตเราจะเพิ่ม app.use('/api/customers', customerRoutes); ตรงนี้
+// 2. เชื่อมต่อ API แยกตาม Schema
+app.use('/api/master', masterRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/core', coreRoutes);
+app.use('/api/procurement', procurementRoutes);
+app.use('/api/production', productionRoutes);
+app.use('/api/sales', salesRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
 
-// เริ่มเปิดเซิร์ฟเวอร์
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}`);
+  console.log(`✅ Backend Server is running on http://localhost:${PORT}`);
 });
