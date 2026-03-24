@@ -19,8 +19,13 @@ app.use(cors());
 app.use(express.json());
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://192.168.0.130:3000'], // อนุญาตทั้ง localhost และ IP ของคุณ
+  origin: [
+    'http://localhost:3000', 
+    'http://192.168.0.130:3000',
+    'https://sunforderpdemo.netlify.app' // 🟢 เพิ่ม URL ของ Netlify ลงไปที่นี่! (ห้ามมี / ต่อท้าย)
+  ], 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 // หน้าแรกเช็คสถานะ
 app.get('/', (req, res) => {
