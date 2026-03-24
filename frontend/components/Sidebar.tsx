@@ -9,96 +9,83 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path: string) => {
-    return pathname === path ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white';
-  };
-
-  const handleLinkClick = () => setIsOpen(false);
-
-  // 🔴 เพิ่มฟังก์ชันนี้เข้าไปเพื่อบังคับให้มันสลับค่าแบบ 100%
-  const toggleMenu = () => {
-    console.log("🔘 ปุ่มถูกกดแล้ว! สถานะก่อนหน้าคือ:", isOpen);
-    setIsOpen((prev) => !prev); // ใช้ prev เพื่อรับประกันว่ามันจะสลับค่าแน่นอน
+    return pathname === path 
+      ? 'bg-white/20 backdrop-blur-md text-white border-l-4 border-white shadow-lg' 
+      : 'text-red-100 hover:bg-white/10 hover:text-white transition-all';
   };
 
   return (
     <>
-      {/* 🔴 แก้ไข onClick ตรงนี้ให้มาเรียกใช้ฟังก์ชัน toggleMenu */}
+      {/* 🔴 ปุ่มเปิดเมนู (Hamburger): จะหายไป (hidden) ทันทีถ้า isOpen เป็น true */}
       <button 
-        className="lg:hidden fixed top-4 left-4 z-[9999] p-2 bg-slate-900 text-white rounded-md shadow-lg hover:bg-slate-800 transition-colors cursor-pointer active:scale-95"
-        onClick={toggleMenu}
-        aria-label={isOpen ? "ปิดเมนู" : "เปิดเมนู"} 
-        title={isOpen ? "ปิดเมนู" : "เปิดเมนู"}
+        className={`lg:hidden fixed top-4 left-4 z-[9999] p-3 bg-[#D92D20] text-white rounded-xl shadow-2xl transition-all ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        onClick={() => setIsOpen(true)}
+        aria-label="เปิดเมนู"
+        title="เปิดเมนู"
       >
-        <span className="sr-only">{isOpen ? "ปิดเมนู" : "เปิดเมนู"}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
 
-      {/* 🔴 ฉากหลังสีดำจางๆ (โชว์เฉพาะมือถือตอนเปิดเมนู) */}
+      {/* ฉากหลังสีดำจางๆ */}
       {isOpen && (
-        <div 
-          className="lg:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="lg:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
       )}
 
-      {/* 🔴 ตัว Sidebar */}
+      {/* Sidebar Content */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white flex flex-col h-full border-r border-slate-800 transition-transform duration-300 ease-in-out
-        /* เงื่อนไขสำคัญ: ถ้าย่อจอ (มือถือ) ให้สไลด์หลบ ถ้าจอใหญ่ (lg) ให้โชว์ค้างไว้ */
+        fixed inset-y-0 left-0 z-50 w-72 bg-[#D92D20] text-white flex flex-col h-full shadow-2xl transition-transform duration-500 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         
-        {/* โลโก้ */}
-        <div className="p-6 border-b border-slate-800 mt-14 lg:mt-0 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-black tracking-wider text-indigo-400">SUNFORD</h1>
-            <p className="text-xs text-slate-400 mt-1 font-medium">ERP System v1.0</p>
+        {/* Header: ปรับใหม่ให้โลโก้สะอาดตา */}
+        <div className="relative p-8 pt-12 border-b border-white/10 bg-[#AF2419]">
+          <div className="flex flex-col">
+             <h1 className="text-3xl font-black tracking-tighter italic text-white uppercase">SUNFORD</h1>
+             <span className="text-[10px] bg-white/20 w-fit px-2 py-0.5 rounded mt-1 font-bold text-white/90">ENTERPRISE ERP</span>
           </div>
-         <button 
-  className="lg:hidden fixed top-3 left-4 z-50 p-2 bg-slate-900 text-white rounded-md shadow-md hover:bg-slate-800 transition"
-  onClick={() => setIsOpen(!isOpen)}
-  aria-label={isOpen ? "ปิดเมนู" : "เปิดเมนู"} 
-  title={isOpen ? "ปิดเมนู" : "เปิดเมนู"}
->
-  <span className="sr-only">{isOpen ? "ปิดเมนู" : "เปิดเมนู"}</span> {/* <- เพิ่มบรรทัดนี้เพื่อชัวร์ว่ามี Text เสมอ (แต่จะมองไม่เห็นบนจอ) */}
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-  </svg>
-</button>
+          
+          {/* 🔴 ปุ่มปิด (X): อันเดียวเน้นๆ อยู่มุมขวาบน ไม่ทับตัวหนังสือ */}
+          <button 
+            className="lg:hidden absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors"
+            onClick={() => setIsOpen(false)}
+            aria-label="ปิดเมนู"
+            title="ปิดเมนู"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
         
-        {/* เมนู */}
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-          <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">ภาพรวม</p>
-          <Link href="/" onClick={handleLinkClick} className={`block px-4 py-2.5 rounded-lg transition-colors font-medium text-sm ${isActive('/')}`}>
-            📊 แดชบอร์ด
-          </Link>
-          
-          <div className="pt-6 pb-2">
-            <p className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">ระบบจัดการหลัก</p>
-          </div>
-          <Link href="/products" onClick={handleLinkClick} className={`block px-4 py-2.5 rounded-lg transition-colors font-medium text-sm ${isActive('/products')}`}>
-            📦 ข้อมูลสินค้า
-          </Link>
-          <Link href="/inventory" onClick={handleLinkClick} className={`block px-4 py-2.5 rounded-lg transition-colors font-medium text-sm ${isActive('/inventory')}`}>
-            🏭 คลังสินค้า
-          </Link>
-          <Link href="/procurement" onClick={handleLinkClick} className={`block px-4 py-2.5 rounded-lg transition-colors font-medium text-sm ${isActive('/procurement')}`}>
-            🛒 จัดซื้อ
-          </Link>
-          <Link href="/maintenance" onClick={handleLinkClick} className={`block px-4 py-2.5 rounded-lg transition-colors font-medium text-sm ${isActive('/maintenance')}`}>
-            🔧 แจ้งซ่อม
-          </Link>
+        {/* เมนูรายการ */}
+        <nav className="flex-1 px-4 py-8 space-y-2 overflow-y-auto">
+          {[
+            { name: 'แดชบอร์ด', icon: '📊', path: '/' },
+            { name: 'ข้อมูลสินค้า', icon: '📦', path: '/products' },
+            { name: 'คลังสินค้า', icon: '🏭', path: '/inventory' },
+            { name: 'จัดการจัดซื้อ', icon: '🛒', path: '/procurement' },
+            { name: 'ระบบแจ้งซ่อม', icon: '🔧', path: '/maintenance' },
+          ].map((item) => (
+            <Link 
+              key={item.path} 
+              href={item.path} 
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center gap-4 px-6 py-4 rounded-2xl ${isActive(item.path)}`}
+            >
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-[15px] font-bold">{item.name}</span>
+            </Link>
+          ))}
         </nav>
-        
+
         {/* User Info */}
-        <div className="p-4 bg-slate-950 border-t border-slate-800 flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-sm font-bold">A</div>
+        <div className="p-6 bg-black/20 border-t border-white/10 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-white text-[#D92D20] flex items-center justify-center font-black">A</div>
           <div className="text-sm">
-            <p className="font-semibold text-white">Admin User</p>
-            <p className="text-xs text-slate-400">Super Admin</p>
+            <p className="font-bold">Admin User</p>
+            <p className="text-[10px] opacity-60">Super Admin</p>
           </div>
         </div>
       </aside>

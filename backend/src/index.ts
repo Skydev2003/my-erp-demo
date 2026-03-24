@@ -10,6 +10,7 @@ import procurementRoutes from './routes/procurementRoutes';
 import productionRoutes from './routes/productionRoutes';
 import salesRoutes from './routes/salesRoutes';
 import maintenanceRoutes from './routes/maintenanceRoutes';
+import analyticsRoutes from './routes/analyticsRoutes';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/procurement', procurementRoutes);
 app.use('/api/production', productionRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
