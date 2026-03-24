@@ -67,19 +67,4 @@ router.get('/bom/:product_id', async (req, res) => {
   if (error) return sendRes(res, 500, false, error.message);
   sendRes(res, 200, true, data);
 });
-
-router.get('/locations', async (_req, res) => {
-  try {
-    const { data, error } = await supabase
-      .schema('master_data')
-      .from('locations')
-      .select('id, name, code')
-      .eq('is_active', true); // ดึงเฉพาะคลังที่ยังเปิดใช้งาน
-
-    if (error) throw error;
-    res.status(200).json({ success: true, data });
-  } catch (error: any) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
 export default router;

@@ -11,19 +11,12 @@ const sendRes = (res: Response, status: number, success: boolean, dataOrMsg: any
 
 // 🟢 1. ดูยอดคงเหลือปัจจุบัน (Stock Balances)
 router.get('/balances', async (_req, res) => {
-  try {
-    // 🔴 เปลี่ยนมาดึงข้อมูลจาก View ที่คุณสร้างไว้
-    const { data, error } = await supabase.schema('inventory')
-      .from('v_stock_report') 
-      .select('*'); 
-    
-    if (error) throw error;
-
-    res.status(200).json({ success: true, data });
-  } catch (error: any) {
-    console.error("Inventory View Error:", error.message);
-    res.status(500).json({ success: false, message: error.message });
-  }
+  const { data, error } = await supabase.schema(SCHEMA)
+    .from('stock_balances')
+    .select('*, item:master_data.items(name, sku), location:master_data.locations(name)');
+  
+  if (error) return sendRes(res, 500, false, error.message);
+  sendRes(res, 200, true, data);
 });
 
 // 🟡 2. บันทึกประวัติความเคลื่อนไหว (Stock Transactions)

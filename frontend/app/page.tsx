@@ -61,7 +61,7 @@ export default function DashboardPage() {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="group bg-white p-6 md:p-8 rounded-3xl md:rounded-[40px] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            className="group bg-white p-6 md:p-8 rounded-[24px] md:rounded-[40px] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
           >
              {/* ไอคอนจางๆ ด้านหลัง ปรับขนาดให้เล็กลงในมือถือ */}
              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:scale-125 transition-transform text-4xl md:text-6xl">
@@ -96,10 +96,10 @@ export default function DashboardPage() {
            <Link href="/inventory" className="bg-slate-900 text-white p-5 rounded-2xl text-center hover:bg-slate-800 hover:-translate-y-1 transition-all text-sm md:text-base">
               🏭 เช็คสต็อก
            </Link>
-           <Link href="/procurement" className="bg-slate-900 text-white p-5 rounded-2xl text-center hover:bg-slate-800 hover:-translate-y-1 transition-all text-sm md:text-base">
+           <Link href="/procurement" className="bg-white text-slate-900 border border-slate-200 p-5 rounded-2xl text-center hover:bg-slate-50 hover:-translate-y-1 transition-all text-sm md:text-base">
               🛒 สั่งซื้อสินค้า
            </Link>
-           <Link href="/maintenance" className="bg-slate-900 text-white p-5 rounded-2xl text-center hover:bg-slate-800 hover:-translate-y-1 transition-all text-sm md:text-base">
+           <Link href="/maintenance" className="bg-white text-slate-900 border border-slate-200 p-5 rounded-2xl text-center hover:bg-slate-50 hover:-translate-y-1 transition-all text-sm md:text-base">
               🔧 แจ้งซ่อม
            </Link>
         </div>
