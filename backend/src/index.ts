@@ -17,6 +17,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://192.168.0.130:3000'], // อนุญาตทั้ง localhost และ IP ของคุณ
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 // หน้าแรกเช็คสถานะ
 app.get('/', (req, res) => {
   res.send('🚀 SUNFORD ERP Backend API is fully operational!');

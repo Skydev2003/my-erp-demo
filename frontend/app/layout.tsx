@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// 1. เปลี่ยนจาก Inter เป็น Prompt
+import { Prompt } from "next/font/google"; 
 import "./globals.css";
-import Sidebar from "@/components/Sidebar"; // ดึง Sidebar มาใช้
+import Sidebar from "@/components/Sidebar";
 
-const inter = Inter({ subsets: ["latin"] });
+// 2. ตั้งค่าฟอนต์ Prompt รองรับภาษาไทย และกำหนดน้ำหนักฟอนต์
+const prompt = Prompt({ 
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ["latin", "thai"] 
+});
 
 export const metadata: Metadata = {
-  title: "My ERP Demo",
-  description: "Basic ERP System Build with Next.js and Express",
+  title: "SUNFORD ERP",
+  description: "Enterprise Resource Planning System",
 };
 
 export default function RootLayout({
@@ -17,18 +22,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body className={`${inter.className} bg-slate-50 text-slate-900`}>
-        {/* จัด Layout แบบ Flexbox: Sidebar ซ้าย, เนื้อหา ขวา */}
-        <div className="flex min-h-screen">
+      {/* 3. เรียกใช้ prompt.className แทน inter */}
+      <body className={`${prompt.className} bg-slate-50 text-slate-900`}>
+        <div className="flex h-screen overflow-hidden bg-slate-50">
           
-          {/* แถบเมนูด้านซ้าย */}
           <Sidebar />
 
-          {/* พื้นที่แสดงเนื้อหาหลัก (จะเปลี่ยนไปตามหน้าที่กด) */}
-          <main className="flex-1 p-8 overflow-y-auto">
-            {children}
-          </main>
-          
+          <div className="flex-1 flex flex-col h-screen overflow-hidden lg:pl-64 w-full transition-all duration-300">
+            {/* Header */}
+           <header className="relative z-10 bg-white shadow-sm h-16 flex items-center px-6 lg:px-8 justify-between border-b border-slate-200 w-full">
+              <button className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors whitespace-nowrap ml-4">
+                ออกจากระบบ
+              </button>
+            </header>
+
+            {/* เนื้อหา */}
+            <main className="flex-1 overflow-y-auto p-4 lg:p-8 bg-slate-50/50 w-full">
+              {children}
+            </main>
+          </div>
+
         </div>
       </body>
     </html>
