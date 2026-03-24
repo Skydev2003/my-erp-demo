@@ -18,7 +18,7 @@ export default function Sidebar() {
     <>
       {/* 🔴 ปุ่มเปิดเมนู (Hamburger): จะหายไป (hidden) ทันทีถ้า isOpen เป็น true */}
       <button 
-        className={`lg:hidden fixed top-4 left-4 z-[9999] p-3 bg-[#D92D20] text-white rounded-xl shadow-2xl transition-all ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`lg:hidden fixed top-4 left-4 z-9999 p-3 bg-[#D92D20] text-white rounded-xl shadow-2xl transition-all ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         onClick={() => setIsOpen(true)}
         aria-label="เปิดเมนู"
         title="เปิดเมนู"
